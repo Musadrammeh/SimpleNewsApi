@@ -2,7 +2,9 @@ package com.example.simplenews.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,74 +13,32 @@ import androidx.lifecycle.Observer
 import com.example.simplenews.NewsViewModel
 import com.example.simplenews.R
 import com.example.simplenews.adapters.NewsAdapter
+import com.example.simplenews.databinding.FragmentBreakingNewsBinding
+import com.example.simplenews.databinding.FragmentSearchedNewsBinding
 import com.example.simplenews.util.Constans.Companion.SEARCH_NEWS_TIME_DELAY
 import com.example.simplenews.util.Resource
-import kotlinx.android.synthetic.main.fragment_searched_news.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 
 class SearchNewsFragment : Fragment(R.layout.fragment_searched_news) {
 
-    lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
-    val TAG = "SearchNewsFragment"
+    var _binding: FragmentSearchedNewsBinding? = null
+    val binding get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
-        setupRecyclerViews()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSearchedNewsBinding.inflate(inflater,container, false)
 
-        var job: Job? = null
-        etSearch.addTextChangedListener { editable ->
-            job?.cancel()
-            job = MainScope().launch {
-                delay(SEARCH_NEWS_TIME_DELAY)
-                editable?.let {
-                    if (editable.toString().isNotEmpty()) {
-                        viewModel.searchNews(editable.toString())
-                    }
-                }
-            }
-        }
+        binding.rvSearchNews
 
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles)
-                    }
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e(TAG, "An error occured: $message")
+        return binding.root
 
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-        })
-    }
-    private fun hideProgressBar(){
-        paginationProgressBar.visibility = View.INVISIBLE
     }
 
-    private fun showProgressBar(){
-        paginationProgressBar.visibility = View.VISIBLE
-    }
-
-
-    private fun setupRecyclerViews(){
-        newsAdapter = NewsAdapter()
-        rvSearchNews.apply{
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
