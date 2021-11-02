@@ -13,10 +13,10 @@ class NewsViewModel (
     val newsRepository: NewsRepository
 ) : ViewModel() {
 
-    val breakingNews: MutableLiveData<com.example.simplenews.util.Resource<NewsResponse>> = MutableLiveData()
+    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
 
-    val searchNews: MutableLiveData<com.example.simplenews.util.Resource<NewsResponse>> = MutableLiveData()
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
 
     init {
@@ -24,7 +24,7 @@ class NewsViewModel (
     }
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
-        breakingNews.postValue(com.example.simplenews.util.Resource.Loading())
+        breakingNews.postValue(Resource.Loading())
         val response = newsRepository.getBreakingNews(countryCode,breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
@@ -35,21 +35,21 @@ class NewsViewModel (
         searchNews.postValue(handleSearchNewsResponse(response))
     }
 
-    private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : com.example.simplenews.util.Resource<NewsResponse>{
+    private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse>{
         if (response.isSuccessful){
             response.body()?.let { resultResponse ->
-                return com.example.simplenews.util.Resource.Success(resultResponse)
+                return Resource.Success(resultResponse)
             }
         }
-        return com.example.simplenews.util.Resource.Error(response.message())
+        return Resource.Error(response.message())
     }
 
-    private fun handleSearchNewsResponse(response: Response<NewsResponse>) : com.example.simplenews.util.Resource<NewsResponse>{
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse>{
         if (response.isSuccessful){
             response.body()?.let { resultResponse ->
-                return com.example.simplenews.util.Resource.Success(resultResponse)
+                return Resource.Success(resultResponse)
             }
         }
-        return com.example.simplenews.util.Resource.Error(response.message())
+        return Resource.Error(response.message())
     }
 }
