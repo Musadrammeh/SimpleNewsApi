@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.simplenews.MainActivity
-import com.example.simplenews.NewsViewModel
 import com.example.simplenews.R
-import com.example.simplenews.databinding.FragmentBreakingNewsBinding
 import com.example.simplenews.databinding.FragmentSavedNewsBinding
 
 class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {

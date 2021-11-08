@@ -1,14 +1,13 @@
 package com.example.simplenews.models
 
 
-import com.example.simplenews.models.Article
 import com.google.gson.annotations.SerializedName
 
 data class NewsResponse(
     @SerializedName("articles")
-    val articles: List<Article>? = listOf(),
+    val articles: List<Article>? = null,
     @SerializedName("status")
-    val status: String? = "",
+    val status: String? = null,
     @SerializedName("totalResults")
-    val totalResults: Int? = 0
+    val totalResults: Int? = null
 )

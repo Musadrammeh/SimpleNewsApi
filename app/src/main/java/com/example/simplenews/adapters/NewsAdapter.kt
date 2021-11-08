@@ -5,13 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.bumptech.glide.Glide
 import com.example.simplenews.R
+
 import com.example.simplenews.databinding.ItemArticlePreviewBinding
 import com.example.simplenews.models.Article
 
@@ -19,38 +16,24 @@ import com.example.simplenews.models.Article
 class NewsAdapter(
     private val articles: MutableList<Article> = mutableListOf<Article>(),
     private val context: Context
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<NewsAdapter.ArticleItemViewHolder>() {
 
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ArticleItemViewHolder(parent)
-            //ItemArticlePreviewBinding.inflate(LayoutInflater.from(parent.context),parent, false)
-
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleItemViewHolder {
+        return ArticleItemViewHolder.create(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ArticleItemViewHolder).onBind(articles[position])
-
+    override fun onBindViewHolder(holder: ArticleItemViewHolder, position: Int) {
+        holder.onBind(articles[position], context)
     }
 
 
     override fun getItemCount(): Int {
         return articles.size
     }
-    @SuppressLint("NotifyDataSetChanged")
-    fun setItems(articles: List<Article>){
-        this.articles.clear()
-        this.articles.addAll(articles)
-        notifyDataSetChanged()
-    }
-    inner class ArticleItemViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_article_preview, parent, false)
-    ){
+    class ArticleItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemArticlePreviewBinding.bind(itemView)
 
-        fun onBind(article: Article){
+        fun onBind(article: Article, context: Context) {
             binding.tvTitle.text = article.title
             binding.tvDescription.text = article.description
             binding.tvPublishedAt.text = article.publishedAt
@@ -58,6 +41,13 @@ class NewsAdapter(
             Glide.with(context).load(article.urlToImage).into(binding.ivArticleImage)
 
         }
+        companion object{
+            fun create(parent: ViewGroup): ArticleItemViewHolder{
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_recycler_view_repository, parent, false)
+
+                return ArticleItemViewHolder(view)
+            }
+        }
     }
-//(val itemListView: ItemArticlePreviewBinding): RecyclerView.ViewHolder(itemListView.root)
 }
