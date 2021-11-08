@@ -5,12 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.simplenews.MainActivity
-import com.example.simplenews.NewsViewModel
 import com.example.simplenews.R
-import com.example.simplenews.databinding.ActivityMainBinding
 import com.example.simplenews.databinding.FragmentArticleBinding
-import java.nio.file.Paths.get
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
 

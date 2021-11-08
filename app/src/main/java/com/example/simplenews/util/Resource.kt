@@ -1,7 +1,5 @@
 package com.example.simplenews.util
 
-import com.example.simplenews.models.NewsResponse
-
 sealed class Resource<T> (
     val data: T? = null,
     val message: String? = null

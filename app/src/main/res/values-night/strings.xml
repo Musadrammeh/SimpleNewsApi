@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internal_server_error">server error</string>
+    <string name="unauthorized">unauthorized</string>
+    <string name="unable_to_get_repo">Unable To Get Repo</string>
+</resources>
