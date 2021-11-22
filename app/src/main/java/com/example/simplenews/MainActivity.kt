@@ -22,9 +22,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
-
     private var progressBar: ProgressBar? = null
-    private val articleList: MutableList<Article> = mutableListOf()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var newsRecyclerView: RecyclerView
     private lateinit var newArrayList: ArrayList<Article>
@@ -35,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         newsRecyclerView =findViewById(R.id.rvBreakingNews)
         newsRecyclerView.layoutManager = LinearLayoutManager(this)
         newsRecyclerView.setHasFixedSize(true)
@@ -44,10 +41,6 @@ class MainActivity : AppCompatActivity() {
         getNewsRepositories()
 
     }
-
-
-
-
     private fun getNewsRepositories(){
         RetrofitInstance
             .instance
@@ -75,19 +68,22 @@ class MainActivity : AppCompatActivity() {
                     if(response.isSuccessful){
 
                         // Getting the list of repositories
-                        val listOfArticle = response.body() as? ArrayList<Article>
+                        val listOfArticle = response.body()?.articles as? ArrayList<Article>
 
                         // Passing data to the next activity
                         listOfArticle?.let {
-                            // Create an intent
-                            val intent = Intent(this@MainActivity, Context::class.java).apply{
+                            // Initialize the adapter
+                            newsAdapter = NewsAdapter(this@MainActivity, listOfArticle)
+
+
+                            // Configure the recycler view
+                            newsRecyclerView?.apply {
+                                adapter = newsAdapter
+                                setHasFixedSize(true)
+                                layoutManager = LinearLayoutManager(context)
 
                             }
-                            // Pass the list of news
-                            intent.putParcelableArrayListExtra("articles", listOfArticle)
-                            // Start the new activity
-                            startActivity(intent)
-                            val article = intent.getParcelableArrayListExtra<Intent>("articles")
+
 
                         }
 
@@ -114,12 +110,7 @@ class MainActivity : AppCompatActivity() {
     companion object{
         private val TAG = MainActivity :: class.java.simpleName
     }
-
-
 }
 
-private fun Parcelable.putParcelableArrayListExtra(s: String, listOfArticle: ArrayList<Article>) {
-
-}
 
 

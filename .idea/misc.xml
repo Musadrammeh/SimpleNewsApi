@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/layout/fragment_news.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_saved_news.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_searched_news.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_article_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_article_preview.xml" value="0.165" />
         <entry key="app/src/main/res/layout/layout_recycler_view_repository.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
