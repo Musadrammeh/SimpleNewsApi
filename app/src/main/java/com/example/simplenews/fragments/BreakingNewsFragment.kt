@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import com.example.simplenews.R
+import com.example.simplenews.adapters.NewsAdapter
 import com.example.simplenews.databinding.FragmentBreakingNewsBinding
 
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
-
 
     var _binding: FragmentBreakingNewsBinding? = null
     val binding get() = _binding!!

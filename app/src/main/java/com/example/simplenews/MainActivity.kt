@@ -1,9 +1,14 @@
 package com.example.simplenews
 
+viewBindning
+import android.content.Context
+
 import android.content.ContentValues.TAG
+main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -23,14 +28,27 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     private var progressBar: ProgressBar? = null
-
+    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsRecyclerView: RecyclerView
+    private lateinit var newArrayList: ArrayList<Article>
+    lateinit var imageId: Array<Int>
+    lateinit var article : Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+ viewBindning
+        newsRecyclerView =findViewById(R.id.rvBreakingNews)
+        newsRecyclerView.layoutManager = LinearLayoutManager(this)
+        newsRecyclerView.setHasFixedSize(true)
+        progressBar = findViewById(R.id.paginationProgressBar)
+
+        newArrayList = arrayListOf<Article>()
         getNewsRepositories()
 
 
+ main
     }
 
     private fun getNewsRepositories() {
@@ -58,27 +76,36 @@ class MainActivity : AppCompatActivity() {
                     response: Response<NewsResponse>
                 ) {
 
-                    //Hide the progressbar
-                    progressBar?.visibility = View.INVISIBLE
+
 
                     if (response.isSuccessful) {
 
+                        //Hide the progressbar
+                        progressBar?.visibility = View.GONE
+
                         // Getting the list of repositories
-                        val listOfArticle = response.body() as? ArrayList<Article>
+                        val listOfArticle = response.body()?.articles as? ArrayList<Article>
 
                         // Passing data to the next activity
                         listOfArticle?.let {
-                            // Create an intent
+                            // Initialize the adapter
+                            newsAdapter = NewsAdapter(this@MainActivity, listOfArticle){article ->
+                                Toast.makeText(this@MainActivity, article.toString(), Toast.LENGTH_SHORT).show()
+                            }
+                            // Configure the recycler view
+                            newsRecyclerView?.apply {
+                                adapter = newsAdapter
+                                setHasFixedSize(true)
+                                layoutManager = LinearLayoutManager(context)
 
-
-                            // Pass the list of news
-                            //intent.putParcelableArrayListExtra(NewsRepository.KEY_REPOSITORY_DATA, it)
-
-                            // Start the new activity
-                            //startActivity(intent)
+                            }
                         }
+ viewBindning
+                    }else{
+
 
                     } else {
+ main
 
                         // Created a message based on the error code
                         val message = when (response.code()) {
@@ -132,4 +159,6 @@ companion object {
 
 }
 }
+
+
 
