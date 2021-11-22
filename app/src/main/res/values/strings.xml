@@ -6,4 +6,7 @@
     <string name="user_not_found">user not found</string>
     <string name="try_another_user">try another user</string>
     <string name="unable_to_get_repo">Unable To Get Repo</string>
+    <string name="number_of_articles">Articles</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
