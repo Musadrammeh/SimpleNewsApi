@@ -10,6 +10,7 @@ import com.example.simplenews.databinding.FragmentArticleBinding
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
 
+
     var _binding: FragmentArticleBinding? = null
     val binding get() = _binding!!
     override fun onCreateView(
