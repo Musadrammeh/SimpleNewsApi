@@ -1,10 +1,6 @@
 package com.example.simplenews
-
-viewBindning
 import android.content.Context
-
 import android.content.ContentValues.TAG
-main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -38,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
- viewBindning
         newsRecyclerView =findViewById(R.id.rvBreakingNews)
         newsRecyclerView.layoutManager = LinearLayoutManager(this)
         newsRecyclerView.setHasFixedSize(true)
@@ -48,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         getNewsRepositories()
 
 
- main
+
     }
 
     private fun getNewsRepositories() {
@@ -77,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                 ) {
 
 
-
                     if (response.isSuccessful) {
 
                         //Hide the progressbar
@@ -89,8 +83,12 @@ class MainActivity : AppCompatActivity() {
                         // Passing data to the next activity
                         listOfArticle?.let {
                             // Initialize the adapter
-                            newsAdapter = NewsAdapter(this@MainActivity, listOfArticle){article ->
-                                Toast.makeText(this@MainActivity, article.toString(), Toast.LENGTH_SHORT).show()
+                            newsAdapter = NewsAdapter(this@MainActivity, listOfArticle) { article ->
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    article.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             // Configure the recycler view
                             newsRecyclerView?.apply {
@@ -100,64 +98,10 @@ class MainActivity : AppCompatActivity() {
 
                             }
                         }
- viewBindning
-                    }else{
-
-
-                    } else {
- main
-
-                        // Created a message based on the error code
-                        val message = when (response.code()) {
-                            500 -> R.string.internal_server_error
-                            401 -> R.string.unauthorized
-                            403 -> R.string.forbidden
-                            404 -> R.string.user_not_found
-                            else -> R.string.try_another_user
-                        }
-
-                        // Show message to the user
-                        Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-                        Log.e(TAG, getString(message))
-
                     }
                 }
             })
     }
-
-//    val listOfRepos = intent?.getParcelableArrayListExtra<Repository>(KEY_REPOSITORY_DATA)
-//
-//    listOfRepos?.let
-//    {
-//
-//        val numberOfRepository = getString(R.string.number_of_repos, it.size)
-//
-//        findViewById<TextView>(R.id.textViewNumberOfRepos)?.text = numberOfRepository
-//
-//        showRepos(it)
-//
-//    }
-//}
-//
-//private fun showRepos(listOfRepositories: ArrayList<Repository>) {
-//
-//    val recyclerViewAdapter = NewsAdapter(listOfRepositories)
-//
-//    val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-//
-//    recyclerView?.apply {
-//        adapter = recyclerViewAdapter
-//        setHasFixedSize(true)
-//        layoutManager = LinearLayoutManager(context)
-//    }
-//}
-
-
-companion object {
-    private val TAG = MainActivity::class.java.simpleName
-    const val KEY_REPOSITORY_DATA = "keyRepositoryData"
-
-}
 }
 
 
