@@ -76,9 +76,9 @@ class MainActivity : AppCompatActivity() {
                         // Passing data to the next activity
                         listOfArticle?.let {
                             // Initialize the adapter
-                            newsAdapter = NewsAdapter(this@MainActivity, listOfArticle)
-
-
+                            newsAdapter = NewsAdapter(this@MainActivity, listOfArticle){article ->
+                                Toast.makeText(this@MainActivity, article.toString(), Toast.LENGTH_SHORT).show()
+                            }
                             // Configure the recycler view
                             newsRecyclerView?.apply {
                                 adapter = newsAdapter
@@ -86,10 +86,7 @@ class MainActivity : AppCompatActivity() {
                                 layoutManager = LinearLayoutManager(context)
 
                             }
-
-
                         }
-
                     }else{
 
                         // Created a message based on the error code

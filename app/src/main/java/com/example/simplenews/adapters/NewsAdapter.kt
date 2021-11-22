@@ -19,11 +19,8 @@ import com.google.android.material.imageview.ShapeableImageView
 class NewsAdapter(
     private val context:Context,
     private val articles: MutableList<Article> = mutableListOf<Article>(),
-    private val listener: ClickListener? = null
+    private val listener: (Article)->Unit
 ) : RecyclerView.Adapter<NewsAdapter.ArticleItemViewHolder>() {
-    interface ClickListener{
-        fun onClickListener(item: Article)
-    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ArticleItemViewHolder {
          val itemView = LayoutInflater.from(viewGroup.context)
@@ -33,8 +30,7 @@ class NewsAdapter(
 
     override fun onBindViewHolder(holder: ArticleItemViewHolder, position: Int) {
         val callArticle = articles[position]
-        holder.onBind(callArticle, context)
-
+        holder.onBind(callArticle, context, listener)
     }
 
     override fun getItemCount(): Int {
@@ -45,8 +41,9 @@ class NewsAdapter(
 
         private val binding = ItemArticlePreviewBinding.bind(itemView)
 
-        fun onBind(article: Article, context: Context) {
+        fun onBind(article: Article, context: Context, listener: (Article)->Unit) {
             binding.tvTitle.text = article.title
+            binding.tvTitle.setOnClickListener { listener(article) }
             Glide.with(context).load(article.urlToImage).into(binding.ivArticleImage)
         }
 
