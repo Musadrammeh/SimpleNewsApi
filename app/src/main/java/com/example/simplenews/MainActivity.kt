@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         newsRecyclerView =findViewById(R.id.rvBreakingNews)
         newsRecyclerView.layoutManager = LinearLayoutManager(this)
         newsRecyclerView.setHasFixedSize(true)
+        progressBar = findViewById(R.id.paginationProgressBar)
 
         newArrayList = arrayListOf<Article>()
         getNewsRepositories()
@@ -62,10 +63,12 @@ class MainActivity : AppCompatActivity() {
                     response: Response<NewsResponse>
                 ) {
 
-                    //Hide the progressbar
-                    progressBar?.visibility = View.INVISIBLE
+
 
                     if(response.isSuccessful){
+
+                        //Hide the progressbar
+                        progressBar?.visibility = View.GONE
 
                         // Getting the list of repositories
                         val listOfArticle = response.body()?.articles as? ArrayList<Article>
