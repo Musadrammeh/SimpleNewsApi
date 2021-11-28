@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -102,6 +103,22 @@ class MainActivity : AppCompatActivity() {
                 }
             })
     }
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        return if (v == binding.editTextEnterArticle) {
+            val article = binding.editTextEnterArticle.text?.trim().toString()
+
+            if (article.isBlank() or article.isEmpty()) {
+                binding.editTextEnterArticle.error = getString(R.string.you_need_to_enter_a_article)
+            } else {
+                imm?.hideSoftInputFromWindow(binding.editTextEnterArticle.windowToken, 0)
+                binding.progressBar.visibility = View.VISIBLE
+                getArticle(Article)
+            }
+            true
+        } else
+            false
+    }
+
 }
 
 
