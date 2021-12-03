@@ -3,4 +3,6 @@
     <string name="internal_server_error">server error</string>
     <string name="unauthorized">unauthorized</string>
     <string name="unable_to_get_repo">Unable To Get Repo</string>
+    <string name="urltoimage">urlToImage</string>
+    <string name="urlToImage" />
 </resources>

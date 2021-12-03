@@ -1,7 +1,10 @@
 package com.example.simplenews.models
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
 
 data class Article(
     @SerializedName("author")
@@ -20,4 +23,4 @@ data class Article(
     val url: String? = null,
     @SerializedName("urlToImage")
     val urlToImage: String? = null
-)
+):Serializable

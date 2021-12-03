@@ -43,7 +43,7 @@ class NewsAdapter(
 
         fun onBind(article: Article, context: Context, listener: (Article)->Unit) {
             binding.tvTitle.text = article.title
-            binding.tvTitle.setOnClickListener { listener(article) }
+            binding.root.setOnClickListener { listener(article) }
             Glide.with(context).load(article.urlToImage).into(binding.ivArticleImage)
         }
 

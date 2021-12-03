@@ -1,15 +1,11 @@
 package com.example.simplenews
-import android.content.Context
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,9 +27,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageId: Array<Int>
     lateinit var article : Array<String>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         newsRecyclerView =findViewById(R.id.rvBreakingNews)
         newsRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -42,8 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         newArrayList = arrayListOf<Article>()
         getNewsRepositories()
-
-
 
     }
 
@@ -72,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                     response: Response<NewsResponse>
                 ) {
 
-
                     if (response.isSuccessful) {
 
                         //Hide the progressbar
@@ -85,38 +81,24 @@ class MainActivity : AppCompatActivity() {
                         listOfArticle?.let {
                             // Initialize the adapter
                             newsAdapter = NewsAdapter(this@MainActivity, listOfArticle) { article ->
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    article.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+
+                                // Display full article
+                                    val intent = Intent(this@MainActivity, ShowArticle::class.java)
+
+                                    intent.putExtra("article",article)
+
+                                    startActivity(intent)
                             }
                             // Configure the recycler view
                             newsRecyclerView?.apply {
                                 adapter = newsAdapter
                                 setHasFixedSize(true)
                                 layoutManager = LinearLayoutManager(context)
-
                             }
                         }
                     }
                 }
             })
-    }
-    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-        return if (v == binding.editTextEnterArticle) {
-            val article = binding.editTextEnterArticle.text?.trim().toString()
-
-            if (article.isBlank() or article.isEmpty()) {
-                binding.editTextEnterArticle.error = getString(R.string.you_need_to_enter_a_article)
-            } else {
-                imm?.hideSoftInputFromWindow(binding.editTextEnterArticle.windowToken, 0)
-                binding.progressBar.visibility = View.VISIBLE
-                getArticle(Article)
-            }
-            true
-        } else
-            false
     }
 
 }

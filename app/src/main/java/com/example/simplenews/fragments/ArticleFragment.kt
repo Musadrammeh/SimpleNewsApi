@@ -20,7 +20,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         _binding = FragmentArticleBinding.inflate(inflater,container, false)
 
-        binding.webView
+        binding.root
 
         return binding.root
     }
