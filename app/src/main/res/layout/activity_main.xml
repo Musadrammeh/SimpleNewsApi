@@ -26,15 +26,6 @@
         android:layout_margin="20dp"
         android:gravity="center_horizontal" />
 
-    <EditText
-        android:id="@+id/search_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableBottom="@drawable/ic_search"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_margin="20dp"
-        android:gravity="center_horizontal"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -42,13 +33,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ProgressBar
-        android:id="@+id/paginationProgressBar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
